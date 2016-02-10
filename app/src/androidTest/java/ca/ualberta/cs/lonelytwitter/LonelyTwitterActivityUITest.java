@@ -35,9 +35,26 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
         ((Button) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save)).performClick();
     }
 
-    //
-    //
 
+    //
+    //check how many tweets are in the adapter
+    @UiThreadTest
+    public void testMakeTweet(){
+        LonelyTwitterActivity lta = (LonelyTwitterActivity) getActivity();
+        int oldLength = lta.getAdapter().getCount();
+
+        makeTweet("test string");
+        ArrayAdapter<Tweet> arrayAdapter = lta.getAdapter();
+        assertEquals(oldLength+1 , arrayAdapter.getCount());
+
+        assertTrue("did you add tweet object", arrayAdapter.getItem(arrayAdapter.getCount()-1) instanceof Tweet);
+
+        //test message is the same
+        Tweet tweet = arrayAdapter.getItem(arrayAdapter.getCount()-1); //get last item
+        assertEquals("this is not the text we expect!", tweet.getMessage(),"test string");
+
+
+    }
     //
     //
 }
