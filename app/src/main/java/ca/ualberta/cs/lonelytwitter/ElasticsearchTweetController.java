@@ -34,7 +34,11 @@ public class ElasticsearchTweetController {
             // NOTE: I'm a making a huge assumption here, that only the first search term
             // will be used.
 
-            Search search = new Search.Builder(search_strings[0])
+            //String searchString = "query, term ,message";
+            String query = "{\"query\":{\"match\":\"message\":\""+search_strings[0]+"\"}}}";
+
+
+            Search search = new Search.Builder(query)
                     .addIndex("testing")
                     .addType("tweet")
                     .build();
